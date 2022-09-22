@@ -8,15 +8,17 @@ class roomfinder:
             self.df = self.df.set_index('CRN')
             self.df = self.df.dropna()
             self.df = self.df.drop(self.df[self.df['Bldg/Rm'] == 'REMOTE ONLY'].index,axis = 0)
+            
             self.reformat()
             
             self.room_list = np.array(sorted(np.unique(self.df['Bldg/Rm'])))
             
             self.available = 0
-            self.in_use = 0
+            self.occupied = 0
         except Exception as E:
             print(E)
     def reformat(self):
+        self.df = self.df[self.df['Actv'] != 'LAB']
         self.df = self.df.drop(['Course #','Course Title','Units','Actv','Start - End','Instructor','Max Enrl', 'Act Enrl','Seats Avail'],axis = 1)
         temp = self.df['Time'].str.split(pat='-',expand=True)
         self.df['Start'] = pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.hour, unit = 'h') + pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.minute, unit = 'm')
@@ -38,18 +40,18 @@ class roomfinder:
         temp = list(map(int, end_str.split(':')))
         end = pd.to_timedelta(temp[0], unit = 'h') + pd.to_timedelta(temp[1],unit = 'm')
         
-        in_use = self.df[self.df['Days'].str.contains(day)].copy()
-        in_use = in_use[(in_use['Start'] >= start) | (in_use['End'] <= end)]
-        in_use = in_use[(in_use['Start'] <= end) | (in_use['End'] >= start)]
-        in_use = np.array(sorted(pd.unique(in_use['Bldg/Rm'])))
+        occupied = self.df[self.df['Days'].str.contains(day)].copy()
+        occupied = occupied[(occupied['Start'] > start) | (occupied['End'] < end)]
+        occupied = occupied[(occupied['Start'] < end) | (occupied['End'] > start)]
+        occupied = np.array(sorted(pd.unique(occupied['Bldg/Rm'])))
         idx_del = []
-        for i in in_use:
+        for i in occupied:
             idx_del.append(int(np.where(self.room_list == i)[0]))
         available_rooms = np.delete(self.room_list, idx_del)
 
         self.available = available_rooms
-        self.in_use = in_use
-        return (available_rooms,in_use)
+        self.occupied = occupied
+        return (available_rooms,occupied)
 
     def print(self):
         print(self.df)
@@ -64,5 +66,5 @@ if __name__ == "__main__":
     finder.find_room(day,start,end)
     print("Available rooms: ")
     print(finder.available)
-    print("In use:")
-    print(finder.in_use)
+    print("Occupied:")
+    print(finder.occupied)
