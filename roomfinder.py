@@ -67,9 +67,11 @@ class roomfinder:
 
         except AssertionError as a:
             print('ERROR: Invalid inputs.')
+            sys.exit(1)
 
         except Exception as e:
             print('ERROR: Cannot parse time inputs. Please format your input as HH:MM, in military time.')
+            sys.exit(1)
 
         else:
             # Find all classes that occur at any point in the time frame.
