@@ -111,7 +111,7 @@ if __name__ == "__main__":
     finder = roomfinder('.\class_schedule.xlsx')
     available, occupied = finder.find_room(day,start,end)
 
-    print("Available rooms: ")
+    print(f"{bcolors.OKGREEN}Available rooms:{bcolors.ENDC}")
     print(available)
-    print("Occupied:")
+    print(f"{bcolors.WARNING}Occupied:{bcolors.ENDC}")
     print(occupied)
