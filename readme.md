@@ -1,6 +1,8 @@
 # To run
 Open your terminal, navigate to folder and execute py file.
+```
     $ python roomfinder.py
+```
 A list of available and occupied rooms available during a time frame will be printed to the terminal.
 
 ## Bugs and plans
