@@ -1,5 +1,5 @@
 # To run
-To run, you must have pandas and numpy installed. 
+To run, you must have pandas, numpy and openpyxl installed. 
 Open your terminal, navigate to folder and execute py file.
 ```
     $ python roomfinder.py
