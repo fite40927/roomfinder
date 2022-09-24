@@ -104,10 +104,8 @@ class bcolors:
 
 if __name__ == "__main__":
     # make pretty colors active if on windows
-    try:
+    if sys.platform.startswith('win32'):
         os.system('color')
-    except:
-        pass
 
     filepath = input("Please input filepath of excel data.\n:")
     day = input("What day are you looking at (M/T/W/R/F)?\n:")
