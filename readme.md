@@ -5,7 +5,7 @@ Open your terminal, navigate to folder and execute py file.
 ```
 A list of available and occupied rooms available during a time frame will be printed to the terminal.
 
-## Bugs and plans
+## Bugs
 1. As of now, clubs and non-course related bookings are not accounted for. 
 2. If a room is occupied for any duration during the range, then it is listed as occupied by the script. 
 
