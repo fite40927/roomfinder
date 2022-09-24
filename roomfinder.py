@@ -32,6 +32,9 @@ class roomfinder:
         # Split time column into a start and an end column.
         temp = self.df['Time'].str.split(pat='-',expand=True)
         self.df = self.df.drop('Time', axis = 1)
+        # Add column to track if am or pm. If pm, 12 hours. If am, 0 hours
+        self.df['meridiem'] = temp[1].str[-2:]
+        self.df['meridiem'] = twelve_hours * (self.df['meridiem'] == 'pm').astype(int)
 
         # Change to military time
         # Twelve hour constant for readability
@@ -39,12 +42,9 @@ class roomfinder:
         # Format start and end as timedelta objects to measure difference
         self.df['Start'] = pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.hour, unit = 'h') + pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.minute, unit = 'm')
         self.df['End'] = pd.to_timedelta(pd.to_datetime(temp[1].str[:-2],format= '%H:%M').dt.hour, unit = 'h') + pd.to_timedelta(pd.to_datetime(temp[1].str[:-2],format= '%H:%M').dt.minute,unit='m')
-        # Add column to track if am or pm. If pm, 12 hours. If am, 0 hours
-        self.df['meridiem'] = temp[1].str[-2:]
-        self.df['meridiem'] = twelve_hours * (self.df['meridiem'] == 'pm').astype(int)
-        # Add meridiem to End, making sure to % to account for 12 pm
+        # Add meridiem (0/12 hours for am/pm) to End, making sure to % to account for 12 pm
         self.df['End'] = self.df['End'] % twelve_hours + self.df['meridiem']
-        # If the difference between End and Start is more than twelve hours, also add twelve hours to Start
+        # If the difference between End and Start is more than twelve hours, Start must also be in pm. Add twelve hours.
         self.df['period'] = self.df['End'] - self.df['Start']
         self.df['period'] = self.df['period'] > twelve_hours
         self.df['Start'] = self.df['Start'] + twelve_hours * self.df['period'].astype(int)
