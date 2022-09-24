@@ -1,1 +1,0 @@
-Running the script 'roomfinder.py' will output the list of rooms available, and the list of rooms occupied during the specified time range. As of now, if a room is occupied for any duration during the range, then it is listed as occupied by the script.
