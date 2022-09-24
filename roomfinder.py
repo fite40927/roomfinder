@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import sys
+import os
 
 class roomfinder:
     def __init__(self, filepath):
@@ -8,7 +9,7 @@ class roomfinder:
         try:
             self.df = pd.read_excel(filepath)
         except FileNotFoundError:
-            print('ERROR: Failed to read excel data.')
+            print(f'{bcolors.FAIL}ERROR:{bcolors.ENDC} Failed to read excel data.')
             sys.exit(1)
 
         # Reformat df for room findability
@@ -66,11 +67,11 @@ class roomfinder:
             assert end > start
 
         except AssertionError as a:
-            print('ERROR: Invalid inputs.')
+            print(f'{bcolors.FAIL}ERROR:{bcolors.ENDC} Invalid inputs.')
             sys.exit(1)
 
         except Exception as e:
-            print('ERROR: Cannot parse time inputs. Please format your input as HH:MM, in military time.')
+            print(f'{bcolors.FAIL}ERROR:{bcolors.ENDC} Cannot parse time inputs. Please format your input as HH:MM, in military time.')
             sys.exit(1)
 
         else:
@@ -89,7 +90,20 @@ class roomfinder:
             # Return both lists
             return available, occupied
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 if __name__ == "__main__":
+    os.system('color')
+
     day = input("What day are you looking at (M/T/W/R/F)?\n:")
     start = input("From what time (military, HH:MM)?\n:")
     end = input("Until what time (military, HH:MM)?\n:")
