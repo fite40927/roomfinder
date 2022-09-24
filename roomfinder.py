@@ -29,6 +29,8 @@ class roomfinder:
         # Drop irrelevant columns
         self.df = self.df.drop(['Course #','Course Title','Units','Actv','Start - End','Instructor','Max Enrl', 'Act Enrl','Seats Avail'],axis = 1)
         
+        # Twelve hour constant for readability
+        twelve_hours = pd.Timedelta(12, unit='h')
         # Split time column into a start and an end column.
         temp = self.df['Time'].str.split(pat='-',expand=True)
         self.df = self.df.drop('Time', axis = 1)
@@ -37,8 +39,6 @@ class roomfinder:
         self.df['meridiem'] = twelve_hours * (self.df['meridiem'] == 'pm').astype(int)
 
         # Change to military time
-        # Twelve hour constant for readability
-        twelve_hours = pd.Timedelta(12, unit='h')
         # Format start and end as timedelta objects to measure difference
         self.df['Start'] = pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.hour, unit = 'h') + pd.to_timedelta(pd.to_datetime(temp[0],format= '%H:%M').dt.minute, unit = 'm')
         self.df['End'] = pd.to_timedelta(pd.to_datetime(temp[1].str[:-2],format= '%H:%M').dt.hour, unit = 'h') + pd.to_timedelta(pd.to_datetime(temp[1].str[:-2],format= '%H:%M').dt.minute,unit='m')
