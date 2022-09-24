@@ -107,12 +107,11 @@ if __name__ == "__main__":
     if sys.platform.startswith('win32'):
         os.system('color')
 
-    filepath = input("Please input filepath of excel data.\n:")
     day = input("What day are you looking at (M/T/W/R/F)?\n:")
     start = input("From what time (military, HH:MM)?\n:")
     end = input("Until what time (military, HH:MM)?\n:")
 
-    finder = roomfinder(filepath)
+    finder = roomfinder('class_schedule.xlsx')
     available, occupied = finder.find_room(day,start,end)
 
     print(f"{bcolors.OKGREEN}Available rooms:{bcolors.ENDC}")
