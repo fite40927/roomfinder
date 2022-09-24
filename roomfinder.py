@@ -90,6 +90,7 @@ class roomfinder:
             # Return both lists
             return available, occupied
 
+# ooh wow pretty colors
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -102,6 +103,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 if __name__ == "__main__":
+    # make pretty colors active
     os.system('color')
 
     day = input("What day are you looking at (M/T/W/R/F)?\n:")
