@@ -103,14 +103,18 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 if __name__ == "__main__":
-    # make pretty colors active
-    os.system('color')
+    # make pretty colors active if on windows
+    try:
+        os.system('color')
+    except:
+        pass
 
+    filepath = input("Please input filepath of excel data.\n:")
     day = input("What day are you looking at (M/T/W/R/F)?\n:")
     start = input("From what time (military, HH:MM)?\n:")
     end = input("Until what time (military, HH:MM)?\n:")
 
-    finder = roomfinder('.\class_schedule.xlsx')
+    finder = roomfinder(filepath)
     available, occupied = finder.find_room(day,start,end)
 
     print(f"{bcolors.OKGREEN}Available rooms:{bcolors.ENDC}")
