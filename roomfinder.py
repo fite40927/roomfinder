@@ -66,7 +66,7 @@ class roomfinder:
             assert end > start
 
         except AssertionError as a:
-            print('ERRPR: Invalid inputs.')
+            print('ERROR: Invalid inputs.')
 
         except Exception as e:
             print('ERROR: Cannot parse time inputs. Please format your input as HH:MM, in military time.')
