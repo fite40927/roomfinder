@@ -25,7 +25,7 @@ class roomfinder:
         self.df = self.df.drop(self.df[self.df['Bldg/Rm'] == 'REMOTE ONLY'].index,axis = 0)
 
         # Drop lab classrooms, as those aren't open to students unless class in session
-        self.df = self.df[self.df['Actv'] != 'LAB']
+        # self.df = self.df[self.df['Actv'] != 'LAB']
 
         # Drop irrelevant columns
         self.df = self.df.drop(['Course #','Course Title','Units','Actv','Start - End','Instructor','Max Enrl', 'Act Enrl','Seats Avail'],axis = 1)
