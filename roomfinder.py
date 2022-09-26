@@ -111,9 +111,9 @@ if __name__ == "__main__":
     
     finder = roomfinder('class_schedule.xlsx')
 
-    option = input("Option 1: Find all available rooms within a time range.\nOption 2: See when a specific room is available.\nOption (1 or 2): ")
-    if option == 1:
-        day = input("What day are you looking at (M/T/W/R/F)?\n:")
+    option = input("Option 1: Find all available rooms within a time range.\nOption 2: See when a specific room is available.\nChoose Option (1 or 2): ")
+    if option == '1':
+        day = input("\nWhat day are you looking at (M/T/W/R/F)?\n:")
         start = input("From what time (military, HH:MM)?\n:")
         end = input("Until what time (military, HH:MM)?\n:")
 
@@ -123,7 +123,7 @@ if __name__ == "__main__":
         print(available)
         print(f"{bcolors.WARNING}Occupied:{bcolors.ENDC}")
         print(occupied)
-    elif option == 2:
+    elif option == '2':
         room = input("Please input the building and room number in shortened form. Ex. COB 114, SE 100\n:")
         finder.find_times(room)
     else:
